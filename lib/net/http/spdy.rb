@@ -2,6 +2,7 @@
 require "bundler"
 Bundler.require(:default)
 require 'net/http'
+$: << File.join(File.dirname(__FILE__), "../../../vender/spdy/lib/")
 require 'spdy'
 require 'net/http/spdy/stream'
 require 'net/http/spdy/stream_session'

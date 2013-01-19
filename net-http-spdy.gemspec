@@ -17,4 +17,7 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.name          = "net-http-spdy"
   s.require_paths = ["lib"]
+
+  s.add_dependency "bindata"
+  s.add_dependency "ffi-zlib"
 end
