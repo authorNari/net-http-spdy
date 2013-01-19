@@ -14,6 +14,13 @@ A SPDY HTTP client implementation with extended Net:HTTP.
 
 * Supports SSL/TLS in Ruby 2.0.0 or later
 
+== COMPARING:
+
+    % time ruby examples/https.rb
+    ruby examples/https.rb  0.12s user 0.01s system 4% cpu 2.766 total
+    % time ruby examples/spdy.rb
+    ruby examples/spdy.rb  0.38s user 0.03s system 26% cpu 1.553 total
+
 == LICENSE:
 
 (The MIT License)
