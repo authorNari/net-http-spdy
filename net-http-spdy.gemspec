@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Narihiro Nakamura"]
   s.email       = ["authornari@gmail.com"]
-  s.homepage    = "https://github.com/authorNari/spdy"
-  s.summary     = "A SPDY HTTP client implementation atop Net:HTTP"
+  s.homepage    = "https://github.com/authorNari/net-http-spdy"
+  s.summary     = "A SPDY HTTP client implementation with extended Net:HTTP"
   s.description = s.summary
 
   s.files         = `git ls-files`.split($\)
