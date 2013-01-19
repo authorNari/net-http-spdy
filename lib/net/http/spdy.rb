@@ -11,8 +11,6 @@ require 'net/http/spdy/response'
 require 'openssl'
 
 class Net::HTTP::SPDY < Net::HTTP
-  undef :close_on_empty_response=
-
   def initialize(address, port = nil)
     super
     @npn_select_cb = ->(protocols) do
@@ -35,6 +33,8 @@ class Net::HTTP::SPDY < Net::HTTP
     super
     @stream_session = StreamSession.new(@socket)
   end
+
+  undef :close_on_empty_response= if defined?(self.close_on_empty_response=true)
 
   private
 
