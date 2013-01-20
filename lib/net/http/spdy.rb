@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-require "bundler"
-Bundler.require(:default)
 require 'net/http'
 $: << File.join(File.dirname(__FILE__), "../../../vender/spdy/lib/")
 require 'spdy'
