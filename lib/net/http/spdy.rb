@@ -2,10 +2,6 @@
 require 'net/http'
 $: << File.join(File.dirname(__FILE__), "../../../vender/spdy/lib/")
 require 'spdy'
-require 'net/http/spdy/stream'
-require 'net/http/spdy/stream_session'
-require 'net/http/spdy/generic_request'
-require 'net/http/spdy/response'
 require 'openssl'
 
 class Net::HTTP::SPDY < Net::HTTP
@@ -89,3 +85,8 @@ class Net::HTTP::SPDY < Net::HTTP
     return false
   end
 end
+
+require 'net/http/spdy/stream'
+require 'net/http/spdy/stream_session'
+require 'net/http/spdy/generic_request'
+require 'net/http/spdy/response'
