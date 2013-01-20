@@ -11,6 +11,14 @@ class TestAccessToWeb < Test::Unit::TestCase
     end
   end
 
+  def test_get_google_simple
+    uri = URI('https://www.google.com/')
+    Net::HTTP::SPDY.start(uri.host, uri.port, use_ssl: true) do |http|
+      res = http.get("/")
+      assert_include ["200", "302"], res.code
+    end
+  end
+
   def test_get_world_flags_parallel
     flag_uris = %w(
        images_sm/ad_flag.png images_sm/ae_flag.png

@@ -50,7 +50,7 @@ class Net::HTTP::SPDY < Net::HTTP
       r.uri = req.uri
 
       r.reading_body(stream, req.response_body_permitted?) {
-        yield res if block_given?
+        yield r if block_given?
       }
       r
     }
