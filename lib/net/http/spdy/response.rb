@@ -1,5 +1,5 @@
 class Net::HTTPResponse
-  if RUBY_VERSION <= "2.0.0"
+  if RUBY_VERSION < "2.0.0"
     attr_accessor :uri
   end
 

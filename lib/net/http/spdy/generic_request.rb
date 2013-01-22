@@ -1,5 +1,5 @@
 class Net::HTTPGenericRequest
-  attr_accessor :uri
+  attr_writer :uri
 
   alias exec_wo_spdy exec
   def exec(sock, ver, path)   #:nodoc: internal use only

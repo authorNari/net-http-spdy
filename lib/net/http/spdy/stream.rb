@@ -73,8 +73,8 @@ class Net::HTTP::SPDY::Stream
     }
     h['host'] = request.delete("host").first
 
-    %w(Connection Host Keep-Alive Proxy-Connection Transfer-Encoding).each do |h|
-      raise ArgumentError, "#{h} cannot send with SPDY" if not request[h].nil?
+    %w(Connection Host Keep-Alive Proxy-Connection Transfer-Encoding).each do |i|
+      raise ArgumentError, "Can't send #{i} with SPDY" if not request[i].nil?
     end
 
     sr = SPDY::Protocol::Control::SynStream.new(zlib_session: @session.parser.zlib_session)
