@@ -112,23 +112,23 @@ class Net::HTTP::SPDY::Stream
   def read_frame(ignore_eof)
     while buf.empty?
       raise EOFError if eof? && !ignore_eof
-      begin
-        @session.monitor.synchronize do
+      @session.monitor.synchronize do
+        begin
           return if not buf.empty?
           s = @sock.io.read_nonblock(BUFSIZE)
           @session.parse(s)
-        end
-      rescue IO::WaitReadable
-        if IO.select([@sock.io], nil, nil, @sock.read_timeout)
-          retry
-        else
-          raise Net::ReadTimeout
-        end
-      rescue IO::WaitWritable
-        if IO.select(nil, [@sock.io], nil, @sock.read_timeout)
-          retry
-        else
-          raise Net::ReadTimeout
+        rescue IO::WaitReadable
+          if IO.select([@sock.io], nil, nil, @sock.read_timeout)
+            retry
+          else
+            raise Net::ReadTimeout
+          end
+        rescue IO::WaitWritable
+          if IO.select(nil, [@sock.io], nil, @sock.read_timeout)
+            retry
+          else
+            raise Net::ReadTimeout
+          end
         end
       end
     end
