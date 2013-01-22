@@ -21,14 +21,17 @@ class Net::HTTP::SPDY < Net::HTTP
     SSL_ATTRIBUTES << :npn_select_cb
   end
 
-  def connect
-    super
-    @stream_session = StreamSession.new(@socket)
-  end
-
   undef :close_on_empty_response= if defined?(self.close_on_empty_response=true)
 
   private
+
+  def connect
+    if RUBY_VERSION < "2.0.0" && use_ssl?
+      raise ArgumentError, "Supports SSL in Ruby 2.0.0 or later only"
+    end
+    super
+    @stream_session = StreamSession.new(@socket)
+  end
 
   def transport_request(req)
     begin_transport req
