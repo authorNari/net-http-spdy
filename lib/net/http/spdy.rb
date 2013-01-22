@@ -17,8 +17,6 @@ class Net::HTTP::SPDY < Net::HTTP
   end
 
   if RUBY_VERSION >= "2.0.0"
-    SSL_IVNAMES << :@npn_protocols
-    SSL_ATTRIBUTES << :npn_protocols
     SSL_IVNAMES << :@npn_select_cb
     SSL_ATTRIBUTES << :npn_select_cb
   end
