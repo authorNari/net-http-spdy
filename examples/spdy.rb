@@ -10,14 +10,12 @@ flag_uris = %w(
 end
 fetch_threads = []
 uri = URI('https://www.modspdy.com/world-flags/')
-http = Net::HTTP::SPDY.new(uri.host, uri.port)
-http.use_ssl = true
-http.start
-flag_uris.each do |uri|
-  req = Net::HTTP::Get.new(uri)
-  fetch_threads << Thread.start do
-    http.request(req)
+Net::HTTP::SPDY.start(uri.host, uri.port, use_ssl: true) do |http|
+  flag_uris.each do |uri|
+    req = Net::HTTP::Get.new(uri)
+    fetch_threads << Thread.start do
+      http.request(req)
+    end
   end
+  fetch_threads.each(&:join)
 end
-fetch_threads.each(&:join)
-http.finish
