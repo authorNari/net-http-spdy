@@ -9,6 +9,7 @@ Bundler.require(:default, :test)
 require "test/unit"
 
 require "net/http/spdy"
+require 'helper'
 
 test_file = "./test/test_*.rb"
 Dir.glob(test_file) do |file|
