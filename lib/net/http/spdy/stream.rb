@@ -98,6 +98,14 @@ class Net::HTTP::SPDY::Stream
     end
   end
 
+  def write_protocol_error
+    d = SPDY::Protocol::Control::RstStream.new
+    d.create(stream_id: @id, status_code: 1)
+    @session.monitor.synchronize do
+      @sock.write d.to_binary_s
+    end
+  end
+
   def close_write
     d = SPDY::Protocol::Data::Frame.new
     d.create(stream_id: @id, flags: 1)

@@ -23,4 +23,21 @@ class TestSpdy < Test::Unit::TestCase
       assert_equal 'This is SPDY.', res.body
     end
   end
+
+  def test_get_response_without_version
+    on_headers do |sv, stream_id, headers|
+      sr = SPDY::Protocol::Control::SynReply.new({:zlib_session => zlib_session})
+      h = {"status" => '200'}
+      sr.create({:stream_id => stream_id, :headers => h, :flags => 1})
+      sv.send_data sr.to_binary_s
+    end
+    on_reset do |stream_id, status_code|
+      assert_equal 1, status_code
+    end
+    assert_raise Net::HTTP::SPDY::StreamError do
+      start do |http|
+        http.request_get("/")
+      end
+    end
+  end
 end

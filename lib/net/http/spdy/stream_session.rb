@@ -66,8 +66,11 @@ class Net::HTTP::SPDY
           s = @streams.fetch(id)
         end
   
-        # TODO: check invalid header
         h = ["#{headers['version']} #{headers['status']}"]
+        if headers['version'].nil? or headers['status'].nil?
+          s.write_protocol_error
+          raise StreamError, "Receives a SYN_REPLY without a status or without a version header"
+        end
         code, msg = headers.delete('status').split(" ")
         r = ::Net::HTTPResponse.new(headers.delete('version'), code, msg)
         r.each_capitalized{|k,v| h << "#{k}: #{v}" }
