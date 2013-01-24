@@ -12,7 +12,8 @@ A SPDY HTTP client implementation with extended Net:HTTP.
 
 == FEATURES/PROBLEMS:
 
-* Supports SSL/TLS in Ruby 2.0.0 or later
+* Support SPDYv2
+* Support SSL/TLS in Ruby 2.0.0 or later
 
 == COMPARING:
 
