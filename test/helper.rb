@@ -11,6 +11,9 @@ module TestNetHTTPSPDY
 
   def teardown
     EM.stop_event_loop
+    while @server_thread.alive?
+      sleep 0.1
+    end
   end
 
   def new
@@ -71,14 +74,10 @@ module TestNetHTTPSPDY
     HANDLERS.each do |h|
       self.class_eval <<-METHOD
         @@#{h} = nil
-        def #{h}(&block)
+        def self.#{h}(&block)
           @@#{h} = block
         end
       METHOD
-    end
-
-    def self.on_headers(&block)
-      @@on_headers = block
     end
 
     def post_init
