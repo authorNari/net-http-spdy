@@ -91,7 +91,7 @@ module TestNetHTTPSPDY
     end
 
     def receive_data(data)
-      @@parser << data
+      @@parser << data if not data.empty?
     end
   end
 

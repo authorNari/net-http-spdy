@@ -5,7 +5,7 @@ class Net::HTTP::SPDY::Stream
 
   attr_accessor :buf, :eof, :connected
   attr_reader :sock, :uri, :assocs, :new_assoc, :id
-  def_delegators :@sock, :io, :closed?, :close
+  def_delegators :@sock, :io, :closed?, :close, :continue_timeout
 
   def initialize(id, session, sock, uri)
     @id = id

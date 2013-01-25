@@ -15,7 +15,7 @@ class Net::HTTPGenericRequest
     if is_spdy?(sock)
       stream = sock
       write_header stream, ver, path
-      wait_for_continue stream, ver if stream.sock.continue_timeout
+      wait_for_continue stream, ver if stream.continue_timeout
       IO.copy_stream(f, stream)
     else
       send_request_with_body_stream_wo_spdy
