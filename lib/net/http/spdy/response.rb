@@ -1,6 +1,10 @@
 class Net::HTTPResponse
-  if RUBY_VERSION < "2.0.0"
-    attr_accessor :uri
+  if RUBY_VERSION < '2.0.0'
+    attr_reader :uri
+
+    def uri= uri # :nodoc:
+      @uri = uri.dup if uri
+    end
   end
 
   attr_reader :associated_responses
