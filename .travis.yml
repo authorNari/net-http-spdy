@@ -1,0 +1,11 @@
+rvm:
+  - 1.9.3
+  - ruby-head
+
+script: bundle exec rake test
+
+gemfile:
+  - Gemfile
+
+notifications:
+  email: authornari@gmail.com
