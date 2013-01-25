@@ -24,6 +24,42 @@ class TestSpdy < Test::Unit::TestCase
     end
   end
 
+  def test_server_push
+    on_headers do |sv, stream_id, headers|
+      sr = SPDY::Protocol::Control::SynReply.new(zlib_session: zlib_session)
+      h = {'Content-Type' => 'text/plain', 'status' => '200', 'version' => 'HTTP/1.1'}
+      sr.create(stream_id: stream_id, headers: h)
+      sv.send_data sr.to_binary_s
+
+      # server push start
+      sr = SPDY::Protocol::Control::SynStream.new(zlib_session: zlib_session)
+      h = {'Content-Type' => 'text/plain', 'status' => '200', 'version' => 'HTTP/1.1', 'url' => "http://127.0.0.1/test.txt"}
+      sr.create(
+        stream_id: stream_id, headers: h,
+        associated_to_stream_id: stream_id+1, flags: 2)
+      sv.send_data sr.to_binary_s
+
+      d = SPDY::Protocol::Data::Frame.new
+      d.create(stream_id: stream_id+1, data: "PUSH OK", flags: 1)
+      sv.send_data d.to_binary_s
+      # finish
+
+      d = SPDY::Protocol::Data::Frame.new
+      d.create(stream_id: stream_id, data: "OK", flags: 1)
+      sv.send_data d.to_binary_s
+    end
+    start do |http|
+      res = http.request_get("/")
+      assert_equal '200', res.code
+      assert_equal 'OK', res.body
+      assert_equal true, res.has_associated_response?
+      assoc = res.associated_responses.first
+      assert_equal '200', assoc.code
+      assert_equal 'PUSH OK', assoc.body
+      assert_equal 'http://127.0.0.1/test.txt', assoc.uri.to_s
+    end
+  end
+
   def test_get_without_version
     on_headers do |sv, stream_id, headers|
       sr = SPDY::Protocol::Control::SynReply.new(zlib_session: zlib_session)

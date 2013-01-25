@@ -7,9 +7,9 @@ class Net::HTTPResponse
 
   ##
   # Returns true when itself has a associated_response
-  def has_associatd_response?
+  def has_associated_response?
     @associated_responses ||= []
-    not @response.empty?
+    not @associated_responses.empty?
   end
 
   ##

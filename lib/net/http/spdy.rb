@@ -99,7 +99,10 @@ class Net::HTTP::SPDY < Net::HTTP
         begin
           r = Net::HTTPResponse.read_new(s)
         end while r.kind_of?(Net::HTTPContinue)
-        yield r if block_given?
+        r.reading_body(s, true) {
+          yield r if block_given?
+        }
+        r.uri = s.uri
         res.associated_responses << r
       end
     end

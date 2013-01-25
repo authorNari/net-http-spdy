@@ -50,7 +50,7 @@ class Net::HTTP::SPDY
         @sock.debug_output.puts "on_open: id=<#{id}>,assoc_id=<#{assoc_id}>" if @sock.debug_output
         if assoc_id
           s = @streams.fetch(id)
-          s.new_assoc = @assoc_id
+          s.new_assoc = assoc_id
         end
       end
       parser.on_headers do |id, headers|
@@ -59,9 +59,10 @@ class Net::HTTP::SPDY
         if s.new_assoc
           # TODO: check invalid header and send PROTOCOL_ERROR
           uri = URI(headers.delete('url'))
-          assoc = push(assoc_id, uri, true)
+          assoc = push(s.new_assoc, uri, true)
           s.new_assoc = nil
           s.assocs << assoc
+          s = assoc
         else
           s = @streams.fetch(id)
         end

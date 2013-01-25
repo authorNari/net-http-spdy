@@ -3,8 +3,8 @@ require 'forwardable'
 class Net::HTTP::SPDY::Stream
   extend Forwardable
 
-  attr_accessor :buf, :eof, :connected
-  attr_reader :sock, :uri, :assocs, :new_assoc, :id
+  attr_accessor :buf, :eof, :connected, :new_assoc
+  attr_reader :sock, :uri, :assocs, :id
   def_delegators :@sock, :io, :closed?, :close, :continue_timeout
 
   def initialize(id, session, sock, uri)
