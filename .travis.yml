@@ -1,6 +1,6 @@
 rvm:
   - 1.9.3
-  - ruby-head
+  - 2.0.0
 
 script: rake test
 
