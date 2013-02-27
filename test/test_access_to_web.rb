@@ -19,7 +19,9 @@ if RUBY_VERSION >= "2.0.0"
         assert_include ["200", "302"], res.code
       end
     end
-  
+
+=begin
+the modspdy site is not supported spdy/v2..
     def test_get_world_flags_parallel
       flag_uris = %w(
          images_sm/ad_flag.png images_sm/ae_flag.png
@@ -46,5 +48,6 @@ if RUBY_VERSION >= "2.0.0"
       fetch_threads.each(&:join)
       http.finish
     end
+=end
   end
 end
